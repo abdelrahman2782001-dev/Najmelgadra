@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f1e8" />
+    <meta name="description" content="معاينة لوحة تحكم نظام نجم للعمليات." />
+    <title>لوحة التحكم | نجم الغدراء للمقاولات</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="layout" id="app">
+      <aside class="sidebar" id="sidebar" aria-label="القائمة الرئيسية">
+        <img class="company-logo" src="./assets/najm-logo-reference.jpg" alt="نجم الغدراء للمقاولات" />
+
+        <div class="owner-card">
+          <div class="owner-avatar">ن</div>
+          <div class="owner-text"><strong>المالك</strong><span>مالك النظام</span></div>
+          <span class="owner-status" title="متصل"></span>
+        </div>
+
+        <nav class="side-nav">
+          <div class="nav-section-label">الرئيسية</div>
+          <button class="nav-link selected" type="button" data-view="dashboard"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span>لوحة التحكم</span></button>
+          <div class="nav-section-label">الموارد البشرية</div>
+          <button class="nav-link" type="button" data-view="attendance-management"><svg viewBox="0 0 24 24"><path d="M8 3v3m8-3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z"/><path d="m8 15 2.2 2.2L16.5 11"/></svg><span>إدارة البصمات</span></button>
+          <button class="nav-link" type="button" data-view="alternate-attendance"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5m4-1v5l3 2"/><circle cx="12" cy="12" r="2.2"/></svg><span>الحضور البديل</span></button>
+          <div class="nav-group" data-employee-nav-group>
+            <button class="nav-link rental-nav-toggle" type="button" data-employee-nav-toggle aria-expanded="false" aria-controls="employee-subnav"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.3"/><path d="M2.5 20v-1a5.5 5.5 0 0 1 5.5-5.5h2a5.5 5.5 0 0 1 5.5 5.5v1M16.2 5.2a3.1 3.1 0 0 1 0 5.8M18 14.3a5 5 0 0 1 3.5 4.7v1"/></svg><span>الموظفون</span><b class="nav-chevron" aria-hidden="true">⌄</b></button>
+            <div class="nav-submenu" id="employee-subnav" data-employee-subnav hidden>
+              <button class="nav-sub-link" type="button" data-view="employees">قائمة الموظفين</button>
+              <button class="nav-sub-link" type="button" data-view="employee-manager-assignments" data-owner-only>تعيين مدير مباشر</button>
+              <button class="nav-sub-link" type="button" data-view="employee-periods">الفترات</button>
+              <button class="nav-sub-link" type="button" data-view="employee-period-assignments">تعيين فترة</button>
+              <button class="nav-sub-link" type="button" data-view="employee-locations">معرف لوكيشن</button>
+              <button class="nav-sub-link" type="button" data-view="employee-location-assignments">تعيين معرف لوكيشن</button>
+              <button class="nav-sub-link" type="button" data-view="employee-custody">العهد</button>
+              <button class="nav-sub-link" type="button" data-view="employee-leaves">إجازات الموظفين</button>
+              <button class="nav-sub-link" type="button" data-view="employee-extras">الإضافيات والمكافآت والتصفية</button>
+              <button class="nav-sub-link" type="button" data-view="employee-returns" data-owner-only>العودة للعمل</button>
+            </div>
+          </div>
+          <div class="nav-group" data-rental-nav-group>
+            <button class="nav-link rental-nav-toggle" type="button" data-rental-nav-toggle aria-expanded="false" aria-controls="rental-subnav"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20V9h14v11M3.5 9 12 4l8.5 5M8.5 12.5h.1m3.4 0h.1m3.4 0h.1"/></svg><span>العمالة الإيجارية</span><b class="nav-chevron" aria-hidden="true">⌄</b></button>
+            <div class="nav-submenu" id="rental-subnav" data-rental-subnav hidden>
+              <button class="nav-sub-link" type="button" data-view="rental-workers">قائمة العمالة</button>
+              <button class="nav-sub-link" type="button" data-view="rental-assignment">تعيين عمالة إيجارية</button>
+              <button class="nav-sub-link" type="button" data-view="preparation">تحضير العمالة الإيجارية</button>
+              <button class="nav-sub-link" type="button" data-view="rental-payroll">المسيرات</button>
+              <button class="nav-sub-link" type="button" data-view="rental-statements">كشف الحسابات</button>
+            </div>
+          </div>
+          <button class="nav-link" type="button" data-view="employee-extras"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.7"/><path d="M12 7v5l3.5 2"/></svg><span>الإضافيات والمكافآت</span></button>
+          <div class="nav-section-label">المخزون والعهد</div>
+          <button class="nav-link" type="button" data-not-ready><svg viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 4.6-3.2 7.4-8 9-4.8-1.6-8-4.4-8-9V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-4.8"/></svg><span>السيفتي</span></button>
+          <button class="nav-link" type="button" data-not-ready><svg viewBox="0 0 24 24"><rect x="7.2" y="2.5" width="9.6" height="19" rx="2.2"/><path d="M10 5h4M10.5 18.5h3"/></svg><span>عهد الجوال والإنترنت</span></button>
+          <div class="nav-section-label">المشروعات والاعتمادات</div>
+          <button class="nav-link" type="button" data-not-ready><svg viewBox="0 0 24 24"><path d="M3 20V9l9-5 9 5v11M7 20v-6h10v6M2 20h20"/></svg><span>المشروعات</span></button>
+          <button class="nav-link" type="button" data-view="my-approvals" data-my-approvals-nav><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><circle cx="18" cy="6" r="2.3"/><path d="M8.5 6h4a3 3 0 0 1 3 3v6.5M18 8.5v5"/></svg><span>موافقاتي</span><b class="nav-badge red-badge" data-my-approvals-count hidden>٠</b></button>
+          <button class="nav-link" type="button" data-view="my-requests"><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-7-4-7 4V3Z"/><path d="M8 8h8M8 12h6"/></svg><span>طلباتي</span></button>
+          <button class="nav-link" type="button" data-view="approval-settings" data-approval-settings-nav><svg viewBox="0 0 24 24"><path d="M4 5h6v5H4zm10 0h6v5h-6zM9 14h6v5H9zM7 10v2h10v-2m-5 2v2"/></svg><span>إعداد سلاسل الاعتماد</span></button>
+          <button class="nav-link" type="button" data-view="change-requests" data-change-requests-nav data-owner-only><svg viewBox="0 0 24 24"><path d="m14 6 4 4M4 20l4.5-1 10.8-10.8a2.1 2.1 0 0 0-3-3L5.5 16 4 20Z"/></svg><span>طلبات التعديل والحذف</span><b class="nav-badge red-badge" data-change-requests-count hidden>٠</b></button>
+          <div class="nav-section-label">الإدارة والتقارير</div>
+          <button class="nav-link" type="button" data-view="attendance-report"><svg viewBox="0 0 24 24"><path d="M4 20V12m5 8V5m5 15v-9m5 9V8m-17 12h20"/></svg><span>التقارير</span></button>
+          <button class="nav-link" type="button" data-view="daily-disbursements" data-disbursement-nav hidden><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M7 14h4"/></svg><span>المبالغ المنصرفة اليومية</span></button>
+          <button class="nav-link" type="button" data-view="ratings" data-ratings-nav><svg viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg><span>التقييمات</span></button>
+          <button class="nav-link" type="button" data-not-ready><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.8"/><path d="M12 7v5l3.5 2"/></svg><span>سجل الحركات</span></button>
+          <button class="nav-link" type="button" data-view="accounts" data-accounts-nav data-owner-only><svg viewBox="0 0 24 24"><circle cx="8" cy="7" r="3"/><path d="M2.8 20v-1a5.2 5.2 0 0 1 5.2-5.2h1.5a5.2 5.2 0 0 1 5.2 5.2v1M16 10h5m-2.5-2.5v5"/></svg><span>الحسابات والصلاحيات</span></button>
+          <div class="nav-section-label help-label">المساعدة</div>
+          <button class="nav-link" type="button" data-not-ready><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.6 2.6 0 1 1 4.3 2c-1.3 1.1-1.8 1.5-1.8 3m0 3h.1"/></svg><span>دليل الاستخدام</span></button>
+        </nav>
+        <div class="sidebar-foot"><span class="secure-icon">◆</span> جلسة آمنة · بيانات محمية</div>
+      </aside>
+
+      <main class="main" id="dashboard">
+        <header class="topbar">
+          <button class="mobile-menu" type="button" aria-label="فتح القائمة" aria-expanded="false" data-menu-toggle><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+          <div class="page-title"><h1>لوحة التحكم</h1><p>نجم الغدراء للمقاولات <span>·</span> مركز تكلفة العمالة</p></div>
+          <div class="period-control" role="group" aria-label="الفترة المعروضة للرسوم">
+            <button type="button" data-period="day">اليوم</button>
+            <button type="button" class="active" data-period="week" aria-pressed="true">الأسبوع</button>
+            <button type="button" data-period="month">الشهر</button>
+          </div>
+          <label class="search-box"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg><input type="search" placeholder="ابحث في النظام" aria-label="ابحث في النظام" /><kbd>Ctrl K</kbd></label>
+          <div class="top-actions">
+            <details class="system-view-shortcuts" data-owner-only><summary>الواجهات</summary><div class="system-view-menu"><strong>عرض داخل النظام الرئيسي</strong><button type="button" data-view="dashboard">الصفحة الرئيسية</button><button type="button" data-view="employees">صفحة الموظفين</button><button type="button" data-system-engineer-preview>عرض واجهة المهندس</button></div></details>
+            <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to English" title="English">EN</button>
+            <button class="icon-button notification-button" type="button" aria-label="الإشعارات"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-2.5 7-2.5 9h17C20.5 16 18 16 18 9ZM9.5 21h5"/></svg><span class="notification-count">12</span></button>
+            <button class="theme-toggle" type="button" aria-label="التبديل إلى الوضع الليلي" title="الوضع النهاري / الليلي" data-theme-toggle><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>
+        </div>
+        </header>
+
+        <div class="dashboard-content">
+          <div class="dashboard-data-source-note" data-dashboard-data-note role="note"></div>
+          <section class="summary-layout" aria-label="ملخص القوى العاملة الحالي">
+            <article class="hero-total">
+              <div class="hero-pattern" aria-hidden="true"></div>
+              <div class="hero-label">إجمالي الموظفين</div>
+              <div class="hero-number" data-total>774</div>
+              <div class="hero-note">سجلات محملة <span>·</span> شركة + إيجارات</div>
+              <div class="hero-ratios" aria-label="أعداد ونسب الموظفين حسب الحالة">
+                <span class="hero-ratio"><small>نشط</small><b><span data-total-active-count>٧٢٨</span><em data-total-active-percent>٩٤٪</em></b></span>
+                <span class="hero-ratio"><small>إجازة</small><b><span data-total-leave-count>٤٦</span><em data-total-leave-percent>٦٪</em></b></span>
+                <span class="hero-ratio"><small>موقوف</small><b><span data-total-stopped-count>٠</span><em data-total-stopped-percent>٠٪</em></b></span>
+              </div>
+              <svg class="hero-sparkline" viewBox="0 0 320 64" preserveAspectRatio="none" aria-label="منحنى توضيحي لإجمالي الموظفين"><path d="M0 11 29 19 55 34 83 31 113 43 145 39 176 50 206 48 237 57 270 53 320 62"/></svg>
+              <div class="hero-progress"><span style="width:94%"></span></div>
+            </article>
+
+            <div class="stat-matrix">
+              <article class="stat-card stat-active"><div class="stat-head"><span>نشطون <small>موظفو الشركة</small></span><i></i></div><strong data-stat="company-active">590</strong><p>على كفالة الشركة</p></article>
+              <article class="stat-card stat-leave"><div class="stat-head"><span>في إجازة <small>موظفو الشركة</small></span><i></i></div><strong data-stat="company-leave">39</strong><p>إجازات سارية</p></article>
+              <article class="stat-card stat-stopped"><div class="stat-head"><span>موقوفون <small>موظفو الشركة</small></span><i></i></div><strong data-stat="company-stopped">0</strong><p>لا يوجد</p></article>
+              <article class="stat-card stat-contract"><div class="stat-head"><span>الإجمالي <small>موظفو الشركة</small></span><i></i></div><strong data-stat="company-total">629</strong><p>سجلات الشركة</p></article>
+              <article class="stat-card stat-active"><div class="stat-head"><span>نشطون <small>العمالة الإيجارية</small></span><i></i></div><strong data-stat="rental-active">138</strong><p>جاهزون للعمل</p></article>
+              <article class="stat-card stat-leave"><div class="stat-head"><span>في إجازة <small>العمالة الإيجارية</small></span><i></i></div><strong data-stat="rental-leave">7</strong><p>إجازات سارية</p></article>
+              <article class="stat-card stat-stopped"><div class="stat-head"><span>موقوفون <small>العمالة الإيجارية</small></span><i></i></div><strong data-stat="rental-stopped">0</strong><p>لا يوجد</p></article>
+              <article class="stat-card stat-contract"><div class="stat-head"><span>الإجمالي <small>العمالة الإيجارية</small></span><i></i></div><strong data-stat="rental-total">145</strong><p>عمالة إيجارية</p></article>
+            </div>
+          </section>
+
+          <section class="panel-grid grid-row-one" aria-label="الحضور والتوزيع ومسير الإيجارات">
+            <article class="panel attendance-panel">
+              <div class="panel-title"><div><h2>نسبة الحضور خلال <span data-period-title>الأسبوع</span></h2><p>متابعة حضور موظفي الشركة والعمالة الإيجارية</p></div><span class="panel-chip">اليوم · الأسبوع · الشهر</span></div>
+              <div class="legend"><span><i class="legend-lime"></i>موظفو الشركة</span><span><i class="legend-cyan"></i>عمالة الإيجارات</span></div>
+              <div class="attendance-chart" role="img" aria-label="رسم توضيحي لنسبة الحضور خلال الأسبوع">
+                <div class="chart-grid-lines"><span>100%</span><span>50%</span><span>0%</span></div>
+                <div class="attendance-bars" data-attendance-bars></div>
+              </div>
+            </article>
+
+            <article class="panel distribution-panel">
+              <div class="panel-title"><div><h2>توزيع الموظفين</h2><p>حسب الحالات في سجلات المعاينة</p></div><span class="panel-chip">إجمالي <b data-distribution-total>٠</b></span></div>
+              <div class="donut-wrap">
+                <div class="donut-chart" role="img" aria-label="توزيع الموظفين المسجلين في المعاينة حسب الحالة"><div class="donut-center"><strong data-distribution-total>٠</strong><span>سجلًا</span></div></div>
+                <div class="donut-legend"><div><span><i class="legend-lime"></i>نشط</span><b data-distribution-active>٠</b></div><div><span><i class="legend-orange"></i>إجازة</span><b data-distribution-leave>٠</b></div><div><span><i class="legend-red"></i>موقوف</span><b data-distribution-stopped>٠</b></div></div>
+              </div>
+            </article>
+
+            <article class="panel payroll-panel">
+              <div class="panel-title"><div><h2>مسير الإيجارات — نوفمبر 2026</h2><p>حالة المسير الحالي</p></div><span class="approval-pill">قيد الاعتماد</span></div>
+              <div class="payroll-steps"><div class="step done"><span>✓</span><small>مسودة</small></div><i></i><div class="step current"><span>2</span><small>اعتماد</small></div><i></i><div class="step"><span>3</span><small>تم الصرف</small></div></div>
+              <div class="payroll-summary"><div><span>إجمالي المستحق</span><strong>312,400 <small>ر.س</small></strong></div><div><span>تم صرفه</span><strong>—</strong></div><div><span>عدد العمال في المسير</span><strong>—</strong></div></div>
+              <div class="payroll-days"><div class="days-line"><span>أيام التحضير المعتمدة <b>29</b></span><span class="arrow">←</span><span>أيام الصرف <b>30</b></span></div><small>مثال توضيحي لتعديل مسموح</small></div>
+            </article>
+          </section>
+
+          <section class="panel-grid grid-row-two" aria-label="تكاليف التشغيل والاعتمادات">
+            <article class="panel monthly-cost-panel">
+              <div class="panel-title"><div><h2>تكلفة العمالة الإيجارية</h2><p>اتجاه التكلفة خلال الأشهر الماضية</p></div><span class="panel-chip">ر.س ألف</span></div>
+              <div class="line-chart" role="img" aria-label="منحنى توضيحي لتكلفة العمالة الإيجارية من يونيو إلى نوفمبر">
+                <svg viewBox="0 0 500 150" preserveAspectRatio="none"><defs><linearGradient id="costArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--lime)" stop-opacity=".32"/><stop offset="1" stop-color="var(--lime)" stop-opacity=".04"/></linearGradient></defs><path class="line-area" d="M25 35 L115 57 L205 48 L295 80 L385 69 L475 89 L475 140 L25 140Z"/><path class="line-path" d="M25 35 L115 57 L205 48 L295 80 L385 69 L475 89"/><g class="line-nodes"><circle cx="25" cy="35" r="4"/><circle cx="115" cy="57" r="4"/><circle cx="205" cy="48" r="4"/><circle cx="295" cy="80" r="4"/><circle cx="385" cy="69" r="4"/><circle cx="475" cy="89" r="5"/></g><g class="line-guides"><path d="M25 17H475M25 58H475M25 99H475M25 140H475"/></g></svg>
+                <div class="month-labels"><span>يونيو</span><span>يوليو</span><span>أغسطس</span><span>سبتمبر</span><span>أكتوبر</span><span>نوفمبر</span></div>
+              </div>
+            </article>
+
+            <article class="panel equipment-cost-panel">
+              <div class="panel-title"><div><h2>تكلفة المعدات حسب الموقع</h2><p>أعلى المواقع تكلفة</p></div><span class="panel-chip">الشهر</span></div>
+              <div class="site-cost-list">
+                <div class="site-cost"><span>موقع العيون</span><div><i class="lime-bar" style="--w:100%"></i></div><b>58,000</b></div>
+                <div class="site-cost"><span>موقع المربع</span><div><i class="cyan-bar" style="--w:71.5%"></i></div><b>41,500</b></div>
+                <div class="site-cost"><span>موقع المطار</span><div><i class="orange-bar" style="--w:47%"></i></div><b>27,200</b></div>
+                <div class="site-cost"><span>الورشة</span><div><i class="red-bar" style="--w:22%"></i></div><b>12,900</b></div>
+              </div>
+              <div class="panel-footnote">أيام التشغيل المعتمدة × السعر اليومي</div>
+            </article>
+
+            <article class="panel approvals-panel">
+              <div class="panel-title"><div><h2>الاعتمادات المعلّقة</h2><p>تحتاج مراجعة من المسؤولين</p></div><span class="count-pill">12</span></div>
+              <div class="approval-list">
+                <div class="approval-row"><i class="approval-dot orange-dot"></i><div><strong>تحضير 30 عامل — موقع العيون</strong><small>بانتظار مهندس الموقع · مراقب تجريبي</small></div><span class="role-chip">مهندس</span></div>
+                <div class="approval-row"><i class="approval-dot red-dot"></i><div><strong>طلب إيقاف عامل إيجار</strong><small>بانتظار الاعتماد · مقدم تجريبي</small></div><span class="role-chip">مدير مشاريع</span></div>
+                <div class="approval-row"><i class="approval-dot cyan-dot"></i><div><strong>طلب مباشرة عامل + صورة الإقامة</strong><small>بانتظار المهندس ثم مدير المشاريع</small></div><span class="role-chip">مهندس</span></div>
+                <div class="approval-row"><i class="approval-dot lime-dot"></i><div><strong>إضافي الجمعة 10-11-2026</strong><small>بانتظار مدير المشاريع · 3 مواقع</small></div><span class="role-chip">مدير مشاريع</span></div>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel-grid grid-row-three" aria-label="المخزون والعهد وآخر الحركات">
+            <article class="panel inventory-panel">
+              <div class="panel-title"><div><h2>المخزون — السيفتي</h2><p>الرصيد الحالي للمهمات</p></div><span class="warning-pill"><i></i> تنبيه 1</span></div>
+              <div class="stock-list">
+                <div class="stock-row"><span>حذاء سيفتي</span><b>240</b><div><i class="stock-lime" style="--w:78%"></i></div></div>
+                <div class="stock-row"><span>فست عاكس</span><b>96</b><div><i class="stock-cyan" style="--w:48%"></i></div></div>
+                <div class="stock-row"><span>خوذة أمان</span><b>18</b><div><i class="stock-red" style="--w:14%"></i></div></div>
+                <div class="stock-row"><span>قفازات عمل</span><b>310</b><div><i class="stock-lime" style="--w:92%"></i></div></div>
+              </div>
+              <div class="stock-alert">7 موظفين استلموا مهمات قبل أقل من 3 شهور</div>
+            </article>
+
+            <article class="panel custody-panel">
+              <div class="panel-title"><div><h2>العهد — الجوال والإنترنت</h2><p>العهد المسجلة حاليًا</p></div><span class="panel-chip">إجمالي <b>212</b></span></div>
+              <div class="custody-list">
+                <div><span>شرائح اتصال</span><b>120</b><i class="cyan-bar" style="--w:100%"></i></div>
+                <div><span>موبايلات</span><b>64</b><i class="lime-bar" style="--w:54%"></i></div>
+                <div><span>لاب توب</span><b>18</b><i class="orange-bar" style="--w:20%"></i></div>
+                <div><span>راوترات</span><b>10</b><i class="red-bar" style="--w:13%"></i></div>
+              </div>
+              <div class="panel-footnote">كل عهدة مرتبطة بإثبات استلام</div>
+            </article>
+
+            <article class="panel activity-panel">
+              <div class="panel-title"><div><h2>آخر الحركات</h2><p>سجل حديث للتغييرات والاعتمادات</p></div><button class="text-action" type="button" data-not-ready>عرض السجل</button></div>
+              <div class="activity-list">
+                <div class="activity-row"><i class="activity-dot lime-dot"></i><div><strong>اعتماد مسير العمالة الإيجارية</strong><small>بواسطة المالك · بيانات تجريبية</small></div><time>منذ 12 دقيقة</time></div>
+                <div class="activity-row"><i class="activity-dot cyan-dot"></i><div><strong>تسجيل عهدة موبايل لموظف</strong><small>بواسطة مسؤول العهد · بيانات تجريبية</small></div><time>منذ ساعة</time></div>
+                <div class="activity-row"><i class="activity-dot orange-dot"></i><div><strong>صرف مهمات سيفتي</strong><small>3 موظفين · المستلم الفعلي مسجل</small></div><time>منذ 3 ساعات</time></div>
+                <div class="activity-row"><i class="activity-dot red-dot"></i><div><strong>تعديل بيانات موظف</strong><small>طلب تعديل معتمد · سجل تجريبي</small></div><time>أمس</time></div>
+              </div>
+            </article>
+          </section>
+
+          <footer class="footer-note"><span>نظام نجم للعمليات</span><span>بيانات المعاينة تجريبية ولا تمثل سجلات حقيقية</span></footer>
+        </div>
+
+        <section class="employees-content approval-content" data-my-approvals hidden>
+          <div class="employees-heading"><div><h2>موافقاتي</h2><p>طلبات تنتظر إجراء الحساب الحالي حسب المرحلة والصلاحية</p></div><span class="panel-chip" data-my-approvals-total>٠ طلبات بانتظارك</span></div>
+          <div data-my-approvals-content></div>
+        </section>
+        <section class="employees-content approval-content" data-my-requests hidden>
+          <div class="employees-heading"><div><h2>طلباتي</h2><p>ارفع طلب تصحيح بصمة وتابع انتقاله بين مهندس الموقع ومدير النظام.</p></div></div>
+          <div data-my-requests-content></div>
+        </section>
+        <section class="employees-content approval-content" data-approval-settings hidden>
+          <div class="employees-heading"><div><h2>إعداد سلاسل الاعتماد</h2><p>اختر مقدمي الطلب، ثم أضف مراحل الاعتماد حسب الصلاحية أو الحساب، وينتهي كل مسار باعتماد مدير النظام</p></div></div>
+          <div data-approval-settings-content></div>
+        </section>
+        <section class="employees-content approval-content" data-accounts hidden>
+          <div class="employees-heading"><div><h2>الحسابات والصلاحيات</h2><p>أضف الحسابات وحدد صلاحياتها، واختر موقع مسؤولية المهندس بشكل مستقل عن مواقع البصمة.</p></div></div>
+          <div data-accounts-content></div>
+        </section>
+        <section class="employees-content approval-content" data-ratings hidden>
+          <div class="employees-heading"><div><h2>التقييمات الشهرية</h2><p>قيّم موظفي الشركة والعمالة الإيجارية النشطين في موقعك كل شهر.</p></div></div>
+          <div data-ratings-content></div>
+        </section>
+        <section class="employees-content approval-content" data-change-requests hidden>
+          <div class="employees-heading"><div><h2>طلبات التعديل والحذف</h2><p>راجع طلبات حذف السجلات أو إخفائها قبل التنفيذ؛ تظل البيانات كما هي حتى الموافقة</p></div><span class="panel-chip" data-change-requests-total>٠ طلبات معلقة</span></div>
+          <div data-change-requests-content></div>
+        </section>
+
+        <section class="employees-content approval-content" data-daily-disbursements hidden>
+          <div class="employees-heading"><div><h2>المبالغ المنصرفة اليومية</h2><p>سجل مالي يومي للمبالغ المصروفة للموظفين أو العمالة الإيجارية أو كمصروف عام</p></div><button class="secondary-button" type="button" data-export-disbursements>تصدير Excel (CSV)</button></div>
+          <div data-daily-disbursements-content></div>
+        </section>
+
+        <section class="employees-content approval-content" data-alternate-attendance hidden>
+          <div class="employees-heading"><div><h2>الحضور البديل</h2><p>حضور بالكاميرا مباشرة عند اكتمال المطابقة، أو طلب بدون كاميرا يراجعه مهندس الموقع ثم مدير النظام</p></div></div>
+          <div data-alternate-attendance-content></div>
+        </section>
+
+        <section class="attendance-management-content" data-attendance-management hidden>
+          <div class="attendance-management-heading"><div><h2>إدارة البصمات</h2><p>سجل الحضور ووسيلة التحضير وموقعه والجهاز المستخدم</p></div><div class="attendance-management-actions"><button class="primary-button" type="button" data-toggle-manual-attendance>تحضير يدوي</button><button class="secondary-button" type="button" data-punch-export>تصدير البيانات</button></div></div>
+          <div class="punch-demo-note"><span class="punch-live-dot" aria-hidden="true"></span><div><strong>عرض فوري لسجلات البصمة</strong><small>هذه معاينة تجريبية؛ استقبال بصمات فعلية لحظيًا يتطلب ربط جهاز أو خدمة الحضور.</small></div></div>
+          <section class="manual-attendance-panel" data-manual-attendance-panel hidden><div><h3>تحضير يدوي لموظف</h3><p>يسجل النظام حضور دوام كامل حسب فترة الموظف السارية في التاريخ المحدد.</p></div><form class="manual-attendance-form" data-manual-attendance-form><label>الموظف<select name="employeeId" data-manual-attendance-employee required><option value="">اختر موظفًا</option></select></label><label>تاريخ الدوام<input type="date" name="attendanceDate" data-manual-attendance-date required></label><div class="manual-attendance-preview" data-manual-attendance-preview>اختر الموظف والتاريخ لعرض الفترة والموقع.</div><div class="manual-attendance-actions"><button class="primary-button" type="submit" data-save-manual-attendance disabled>تسجيل دوام كامل</button><button class="secondary-button" type="button" data-cancel-manual-attendance>إلغاء</button></div></form></section>
+          <section class="punch-filter-panel" aria-label="فلاتر البصمات">
+            <div class="punch-date-mode" role="group" aria-label="الفترة الزمنية"><button type="button" data-punch-range="today" class="active" aria-pressed="true">اليوم</button><button type="button" data-punch-range="yesterday" aria-pressed="false">أمس</button><button type="button" data-punch-range="custom" aria-pressed="false">فترة زمنية</button></div>
+            <div class="punch-custom-dates" data-punch-custom-dates hidden><label>من تاريخ<input type="date" data-punch-from></label><label>إلى تاريخ<input type="date" data-punch-to></label></div>
+            <label class="punch-employee-filter">اسم الموظف<select data-punch-employee><option value="all">الكل</option></select></label>
+            <label class="punch-source-filter">طريقة التحضير<select data-punch-source><option value="all">كل الطرق</option><option>حضور بالكاميرا</option><option>GPS</option><option>تصحيح بصمة معتمد</option><option>حضور بديل</option><option>تحضير يدوي</option><option>بصمة الجهاز</option><option>بيانات تجريبية</option></select></label>
+            <label class="punch-search-filter">بحث<input type="search" data-punch-search placeholder="ابحث باسم الموظف أو الموقع" aria-label="البحث في البصمات"></label>
+          </section>
+          <p class="punch-date-warning" data-punch-date-warning hidden></p>
+          <div class="punch-summary"><span><strong data-punch-count>٠</strong> بصمة ضمن الاختيار</span><span class="punch-refresh-state">وقت تحديث العرض: <time data-punch-updated></time></span></div>
+          <div class="punch-table-wrap"><table class="punch-table"><thead><tr><th>الموظف</th><th>الفرع</th><th>الإدارة</th><th>الموقع</th><th>الطابع الزمني</th><th>الفترة المحددة</th><th>حالة البصمة</th><th>طريقة التحضير</th><th>الجهاز المستخدم</th></tr></thead><tbody data-punch-table-body></tbody></table></div>
+          <div class="punch-empty" data-punch-empty hidden>لا توجد بصمات ضمن الفترة والاختيارات الحالية.</div>
+        </section>
+
+        <section class="employees-content" data-employees-view hidden>
+          <div class="employees-heading">
+            <div><h2>الموظفون</h2><p>سجلات موظفي الشركة وبياناتهم الوظيفية</p></div>
+          <div class="employees-actions"><button type="button" class="secondary-button" data-archive-toggle data-owner-only aria-pressed="false">أرشيف الموظفين</button><button type="button" class="secondary-button" data-demo-action="template">تنزيل القالب</button><button type="button" class="secondary-button" data-demo-action="import">استيراد من Excel</button><button type="button" class="primary-button" data-demo-action="add">+ إضافة موظف</button></div>
+          </div>
+          <section class="employee-toolbar panel" aria-label="أدوات قائمة الموظفين">
+            <div class="employee-counts" role="group" aria-label="تصفية الموظفين حسب الحالة">
+              <button class="count-filter active" type="button" data-status-filter="all" aria-pressed="true">الكل <b data-count="all">0</b></button>
+              <button class="count-filter" type="button" data-status-filter="active" aria-pressed="false">نشط <b data-count="active">0</b></button>
+              <button class="count-filter" type="button" data-status-filter="leave" aria-pressed="false">إجازة <b data-count="leave">0</b></button>
+              <button class="count-filter" type="button" data-status-filter="stopped" aria-pressed="false">موقوف <b data-count="stopped">0</b></button>
+            </div>
+            <div class="employee-filters">
+              <label class="employee-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="ابحث بالاسم أو الكود أو الهوية…" aria-label="ابحث في الموظفين" data-employee-search></label>
+              <select aria-label="تصفية حسب الوظيفة" data-job-filter><option value="">كل الوظائف</option></select>
+              <div class="view-toggle" role="group" aria-label="طريقة عرض الموظفين"><button type="button" data-list-mode="cards" aria-pressed="false">▦ بطاقات</button><button type="button" class="active" data-list-mode="rows" aria-pressed="true">☷ صفوف</button></div>
+            </div>
+          </section>
+          <div class="employee-list" data-employee-list></div>
+          <div class="employee-empty panel" data-employee-empty hidden>لا توجد نتائج مطابقة للبحث أو الفلاتر.</div>
+          <footer class="footer-note"><span>موظفو الشركة</span><span>بيانات المعاينة تجريبية ولا تمثل سجلات حقيقية</span></footer>
+        </section>
+
+        <section class="employee-profile-content" data-employee-profile hidden></section>
+
+        <section class="employees-content employee-management-content" data-employee-management="manager-assignments" hidden>
+          <div class="employees-heading"><div><h2>تعيين مدير مباشر</h2><p>اختر المدير ثم الموظفين التابعين له. تعيين المدير مستقل عن طلبات الإجازة.</p></div></div>
+          <div class="employee-management-list" data-employee-manager-assignment></div>
+        </section>
+
+        <section class="employees-content employee-management-content" data-employee-management="periods" hidden>
+          <div class="employees-heading"><div><h2>الفترات</h2><p>تعريف فترات العمل والسماح بالبصمة لاستخدامها عند التعيين</p></div></div>
+          <div class="employee-management-list" data-all-employee-periods></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="period-assignments" hidden>
+          <div class="employees-heading"><div><h2>تعيين فترة</h2><p>اختر فترة العمل ثم الموظفين لتطبيقها عليهم</p></div></div>
+          <div class="employee-management-list" data-all-employee-period-assignments></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="leaves" hidden>
+          <div class="employees-heading"><div><h2>إجازات الموظفين</h2><p>طلب الموظف أو المهندس ثم اعتماد مدير المشاريع ومالك النظام</p></div></div>
+          <div class="employee-management-list" data-all-employee-leaves></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="extras" hidden>
+          <div class="employees-heading"><div><h2>الإضافيات والمكافآت والتصفية</h2><p>سجل المستحقات مستقل عن اعتمادها وعن صرفها، ويرتبط بإجازة الموظف وتصفية مستحقاته</p></div></div>
+          <div class="employee-management-list" data-employee-extras-content></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="returns" hidden>
+          <div class="employees-heading"><div><h2>العودة للعمل</h2><p>تسجيل العودة الفعلية بعد إجازة أو إيقاف مع حفظ التاريخ والحساب المسؤول</p></div></div>
+          <div class="employee-management-list" data-employee-returns-list></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="locations" hidden>
+          <div class="employees-heading"><div><h2>معرف لوكيشن</h2><p>إضافة المواقع على الخريطة وإدارة أسمائها ونطاقاتها</p></div></div>
+          <div class="employee-management-list" data-all-employee-locations></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="location-assignments" hidden>
+          <div class="employees-heading"><div><h2>تعيين معرف لوكيشن</h2><p>اختيار المواقع ثم تعيينها للموظفين بشكل دائم حتى تغييرها</p></div></div>
+          <div class="employee-management-list" data-all-employee-location-assignments></div>
+        </section>
+        <section class="employees-content employee-management-content" data-employee-management="custody" hidden>
+          <div class="employees-heading"><div><h2>العهد</h2><p>سجل مركزي للعهد الموجودة في المكتب أو المسلّمة للموظفين</p></div></div>
+          <div class="employee-management-list" data-all-employee-custodies></div>
+        </section>
+
+        <section class="employees-content rental-workers-content" data-rental-workers hidden>
+          <div class="employees-heading">
+            <div><h2>العمالة الإيجارية</h2><p>قائمة مستقلة لبيانات العمالة وملفاتهم</p></div>
+            <div class="employees-actions"><button type="button" class="secondary-button" data-rental-action="template">تنزيل القالب</button><button type="button" class="secondary-button" data-rental-action="import">استيراد من Excel</button><button type="button" class="primary-button" data-rental-action="add">+ إضافة عامل</button></div>
+          </div>
+          <section class="employee-toolbar panel" aria-label="أدوات قائمة العمالة الإيجارية">
+            <div class="employee-counts" role="group" aria-label="تصفية العمالة حسب الحالة">
+              <button class="count-filter active" type="button" data-rental-status="all" aria-pressed="true">الكل <b data-rental-count="all">0</b></button>
+              <button class="count-filter" type="button" data-rental-status="active" aria-pressed="false">نشط <b data-rental-count="active">0</b></button>
+              <button class="count-filter" type="button" data-rental-status="leave" aria-pressed="false">إجازة <b data-rental-count="leave">0</b></button>
+              <button class="count-filter" type="button" data-rental-status="stopped" aria-pressed="false">موقوف <b data-rental-count="stopped">0</b></button>
+            </div>
+            <div class="employee-filters">
+              <label class="employee-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="ابحث بالاسم أو المهنة أو الإقامة…" aria-label="ابحث في العمالة الإيجارية" data-rental-search></label>
+              <select aria-label="تصفية حسب المهنة" data-rental-job><option value="">كل المهن</option></select>
+              <div class="view-toggle" role="group" aria-label="طريقة عرض العمالة"><button type="button" data-rental-mode="cards" aria-pressed="false">▦ بطاقات</button><button type="button" class="active" data-rental-mode="rows" aria-pressed="true">☷ صفوف</button></div>
+            </div>
+          </section>
+          <div class="employee-list" data-rental-list></div>
+          <div class="employee-empty panel" data-rental-empty hidden>لا توجد نتائج مطابقة للبحث أو الفلاتر.</div>
+          <footer class="footer-note"><span>العمالة الإيجارية</span><span>بيانات المعاينة تجريبية ولا تمثل سجلات حقيقية</span></footer>
+        </section>
+
+        <section class="panel rental-placeholder" data-rental-placeholder="rental-payroll" hidden>
+          <span class="section-kicker">العمالة الإيجارية</span><h2>المسيرات</h2>
+          <p>سيظهر هنا إعداد المسيرات ومراجعتها بعد تحديد دورة الصرف وحقول المسير.</p>
+        </section>
+        <section class="panel rental-placeholder" data-rental-placeholder="rental-statements" hidden>
+          <span class="section-kicker">العمالة الإيجارية</span><h2>كشف الحسابات</h2>
+          <p>سيظهر هنا كشف حساب كل مورد وعامل إيجاري وربطه بالتحضير والمسيرات المعتمدة.</p>
+        </section>
+        <section class="employee-profile-content" data-rental-profile hidden></section>
+
+        <section class="employees-content rental-workers-content" data-rental-assignment hidden>
+          <div class="employees-heading"><div><h2>تعيين عمالة إيجارية</h2><p>ابحث عن العامل وأكمل بيانات المباشرة ثم أرسل النموذج لمسار الاعتماد</p></div></div>
+          <section class="profile-panel rental-assignment-panel">
+            <label class="employee-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="ابحث باسم العامل أو الكود أو الإقامة" aria-label="البحث عن عامل للتعيين" data-rental-assignment-search></label>
+            <div class="rental-assignment-results" data-rental-assignment-results></div>
+            <div data-rental-assignment-form></div>
+          </section>
+        </section>
+
+        <section class="preparation-content" data-preparation-view hidden>
+          <div class="employees-heading">
+            <div><h2>تحضير العمالة الإيجارية</h2><p>تجهيز التحضير باسم الحساب الحالي ومراجعته حسب تسلسل الاعتماد والموقع</p></div>
+            <span class="panel-chip">منع التكرار في نفس اليوم والموقع</span>
+          </div>
+          <div class="preparation-layout">
+            <section class="panel preparation-select-panel">
+              <div class="panel-title"><div><h2>بيانات التحضير</h2><p>اختر الفترة والموقع ثم حدد العمال</p></div><span class="panel-chip">معاينة</span></div>
+              <div class="preparation-meta">
+                <label>من تاريخ<input type="date" value="2026-11-18" data-prep-date-start></label>
+                <label>إلى تاريخ<input type="date" data-prep-date-end></label>
+                <label>موقع العمل<select data-prep-site><option>موقع العيون</option><option>موقع المربع</option><option>موقع المطار</option><option>الورشة</option></select></label>
+                <div class="preparation-identity"><span>حساب المُعدّ</span><strong data-prep-identity>حساب المالك — معاينة</strong></div>
+              </div>
+              <div class="prep-date-warning" data-prep-date-warning role="status" aria-live="polite">اختر تاريخ النهاية في خانة «إلى تاريخ» لإكمال الفترة.</div>
+              <label class="employee-search preparation-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="ابحث عن عامل بالاسم أو المهنة أو الإقامة" aria-label="البحث عن عامل للتحضير" data-prep-search></label>
+              <div class="preparation-workers" data-prep-workers></div>
+              <div class="preparation-actions"><span>المحدد: <b data-prep-selected-count>٠</b></span><button class="primary-button" type="button" data-prep-preview-button>معاينة التحضير</button></div>
+              <div class="preparation-preview" data-prep-preview hidden></div>
+            </section>
+            <aside class="panel preparation-guide approval-settings">
+              <div class="panel-title"><div><h2>سلسلة اعتماد التحضير</h2><p>تُدار ضمن إعدادات سلاسل الاعتماد</p></div><span class="approval-pill">إعداد النظام</span></div>
+              <p class="approval-settings-note">يمكنك تعيين المهندس ومدير المشاريع بالاسم أو بالصلاحية من صفحة «إعداد سلاسل الاعتماد».</p>
+              <button type="button" class="secondary-button" data-view="approval-settings" data-owner-only>فتح إعداد السلاسل</button>
+              <div class="preparation-rule"><strong>قاعدة التكرار</strong><p>يُمنع تحضير العامل مرتين في نفس اليوم والموقع.</p></div>
+            </aside>
+          </div>
+          <section class="panel preparation-log">
+            <div class="panel-title"><div><h2>سجل التحضير</h2><p>فلترة حسب تاريخ التحضير والعامل، أو عرض جميع العمال في التاريخ المحدد</p></div><button class="secondary-button" type="button" data-export-preparation-log>تصدير Excel (CSV)</button></div>
+            <div class="preparation-log-filters">
+              <label>من تاريخ<input type="date" value="2026-11-18" data-log-date-start></label>
+              <label>إلى تاريخ<input type="date" value="2026-11-18" data-log-date-end></label>
+              <label>العامل<select data-log-worker><option value="all">جميع الموظفين</option></select></label>
+              <button class="secondary-button" type="button" data-clear-log-filters>عرض كل التواريخ والموظفين</button>
+              <span class="log-result-count" data-log-result-count></span>
+            </div>
+            <div class="prep-date-warning" data-log-date-warning hidden role="status" aria-live="polite"></div>
+            <div class="employee-list rows"><table class="employee-table preparation-table"><thead><tr><th>التاريخ</th><th>العامل</th><th>المهنة</th><th>الموقع</th><th>المُعدّ</th><th>المعتمد</th><th>الحالة</th></tr></thead><tbody data-preparation-log-body></tbody></table></div>
+          </section>
+          <footer class="footer-note"><span>التحضير للعمالة الإيجارية فقط</span><span>بيانات المعاينة تجريبية ولا تمثل سجلات حقيقية</span></footer>
+        </section>
+      </main>
+      <button class="sidebar-backdrop" type="button" aria-label="إغلاق القائمة" data-menu-close></button>
+    </div>
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+  </body>
+</html>
